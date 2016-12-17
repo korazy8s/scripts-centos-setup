@@ -69,58 +69,39 @@ mkdir /var/certs
 rm -f /var/certs/www-cert.crt
 rm -f /var/certs/www-cert.key
 openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -x509 -sha256 -days 1820 -nodes -out /var/certs/www-cert.crt -keyout /var/certs/www-cert.key
-chmod 400 /var/certs/www-cert.crt
-chmod 400 /var/certs/www-cert.key
+chmod 444 /var/certs/www-cert.crt
+chmod 444 /var/certs/www-cert.key
 
-####################
-## TODO: configure apache host with ssl certs
-####################
+# configure apache host with ssl certs
 cat > /etc/httpd/conf.d/default.conf <<EOL
-NameVirtualHost *:443
 <VirtualHost *:443>
-    DocumentRoot "/var/www/html"
-    SSLEngine on
-    SSLOptions +StrictRequire
-    <Directory />
-        SSLRequireSSL
-    </Directory>
-    SSLProtocol -all +TLSv1 +SSLv3
-    SSLCipherSuite HIGH:MEDIUM:!aNULL:+SHA1:+MD5:+HIGH:+MEDIUM
-    SSLRandomSeed startup file:/dev/urandom 1024
-    SSLRandomSeed connect file:/dev/urandom 1024
-    SSLSessionCache shm:/usr/local/apache2/logs/ssl_cache_shm
-    SSLSessionCacheTimeout 600    
-    SSLCertificateFile /var/certs/www-cert.crt
-    SSLCertificateKeyFile /var/certs/www-cert.key
-    SSLVerifyClient none
-    SSLProxyEngine off
-    <IfModule mime.c>
-        AddType application/x-x509-ca-cert      .crt
-        AddType application/x-pkcs7-crl         .crl
-    </IfModule>
-    SetEnvIf User-Agent ".*MSIE.*" \  
-      nokeepalive ssl-unclean-shutdown \  
-      downgrade-1.0 force-response-1.0
+  ServerName ${HOSTNAME}
+  ServerAlias ${HOSTNAME}
+  DocumentRoot /var/www/html
+  SSLEngine on
+  SSLCertificateFile /var/certs/www-cert.crt
+  SSLCertificateKeyFile /var/certs/www-cert.key
 </VirtualHost>
 EOL
 
 # start apache service
 systemctl start httpd
 systemctl enable httpd
-# if run script more than once, restart for changes
+# if script run more than once, restart for changes
 systemctl restart httpd
 
 # show info
-cat /etc/php.ini |grep memory_limit
+echo
+echo ==================================================
 echo
 firewall-cmd --state
 firewall-cmd --list-all
 echo
 ip addr
 echo
-php --version
-echo
-hostnamectl status
-echo
 systemctl status httpd
+echo
+ls -la /var/certs
+echo
+openssl x509 -text -noout -in /var/certs/www-cert.crt
 echo
