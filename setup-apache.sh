@@ -68,9 +68,9 @@ emailAddress=${CERTEMAIL}
 mkdir /var/certs
 rm -f /var/certs/www-cert.crt
 rm -f /var/certs/www-cert.key
-openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -x509 -sha256 -days 1820 -nodes -out /var/certs/www-cert.crt -keyout /var/certs/www-cert.key
-chmod 444 /var/certs/www-cert.crt
-chmod 444 /var/certs/www-cert.key
+openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -x509 -newkey rsa:2048 -days 1820 -nodes -out /var/certs/www-cert.crt -keyout /var/certs/www-cert.key
+chmod 755 /var/certs/www-cert.crt
+chmod 755 /var/certs/www-cert.key
 
 # configure apache host with ssl certs
 cat > /etc/httpd/conf.d/default.conf <<EOL
