@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 HOSTNAME=id-jenkins-sl1
 
 # updates
