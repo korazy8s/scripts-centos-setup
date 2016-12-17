@@ -19,7 +19,6 @@ yum check-update
 yum -y install webmin
 chkconfig webmin on
 service webmin start
-service webmin enable
 
 # open firewall
 firewall-cmd --add-port=10000/tcp --permanent
