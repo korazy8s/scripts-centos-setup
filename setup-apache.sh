@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # set variables
 HOSTNAME=www1
