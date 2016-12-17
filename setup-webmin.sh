@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # add webmin to yum repos
 cat > /etc/yum.repos.d/webmin.repo <<EOL
