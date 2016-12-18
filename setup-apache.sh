@@ -72,36 +72,56 @@ openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -x509 -newkey rsa:2048
 chmod 755 /var/certs/www-cert.crt
 chmod 755 /var/certs/www-cert.key
 
+# setup apache
+mkdir /var/www/html/public
+
 # configure apache host with ssl certs
 cat > /etc/httpd/conf.d/default.conf <<EOL
 <VirtualHost *:443>
   ServerName ${HOSTNAME}
   ServerAlias ${HOSTNAME}
-  DocumentRoot /var/www/html
+  DocumentRoot /var/www/html/public
+  <Directory /var/www/html/public/>
+    Options -Indexes +FollowSymLinks
+    AllowOverride All
+    Require all granted
+  </Directory>
   SSLEngine on
   SSLCertificateFile /var/certs/www-cert.crt
   SSLCertificateKeyFile /var/certs/www-cert.key
 </VirtualHost>
 EOL
 
-# start apache service
-systemctl start httpd
-systemctl enable httpd
-# if script run more than once, restart for changes
-systemctl restart httpd
+# configure .htaccess
+cat > /var/www/html/public/.htaccess <<EOL
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+EOL
 
-# show info
-echo
-echo ==================================================
-echo
-firewall-cmd --state
-firewall-cmd --list-all
-echo
-ip addr
-echo
-systemctl status httpd
-echo
-ls -la /var/certs
-echo
-openssl x509 -text -noout -in /var/certs/www-cert.crt
-echo
+# remove apache welcome page
+cat > /etc/httpd/conf.d/welcome.conf <<EOL
+# disabled
+EOL
+
+# start apache service
+systemctl enable httpd
+
+# disable SELinux
+cat > /etc/selinux/config <<EOL
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of three two values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+EOL
+
+#reboot
+reboot
