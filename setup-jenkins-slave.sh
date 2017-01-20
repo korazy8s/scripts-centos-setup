@@ -84,6 +84,17 @@ sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
 # set host info
 hostnamectl set-hostname ${HOSTNAME}
 
+# yui compressor
+wget -O /var/tmp/yuicompressor-2.4.7.zip https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip
+unzip /var/tmp/yuicompressor-2.4.7.zip -d /var/tmp
+rm -f /usr/share/java/yuicompressor-2.4.7.jar
+rm -f /usr/share/java/yuicompressor.jar
+cp -f /var/tmp/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar /usr/share/java/yuicompressor-2.4.7.jar
+ln -s /usr/share/java/yuicompressor-2.4.7.jar /usr/share/java/yuicompressor.jar
+chmod 777 /usr/share/java/yuicompressor*.jar
+rm -rf /var/tmp/yuicompressor-2.4.7
+rm -f /var/tmp/yuicompressor-2.4.7.zip
+
 # show info
 cat /etc/php.ini |grep memory_limit
 firewall-cmd --state
