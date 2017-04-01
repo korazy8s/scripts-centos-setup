@@ -1,4 +1,4 @@
-$!/bin/sh
+#!/bin/sh
 
 # show host information
 hostnamectl
