@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # set variables
-HOSTNAME=www1
+HOSTNAME=id-base
 CERTC=CA
 CERTST=Manitoba
 CERTO=
