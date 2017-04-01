@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # set variables
-HOSTNAME=www1
 CERTC=CA
 CERTST=Manitoba
 CERTO=
@@ -27,33 +26,21 @@ yum -y install httpd
 # install dependencies
 yum -y group install "Development Tools"
 yum -y install openssl
-yum -y install php
-yum -y install php-devel
-yum -y install php-pear
+yum -y install libmcrypt
+yum -y install php php-devel php-pear php-mysql php-mbstring php-mcrypt php-xml php-intl
 yum -y install wget
 yum -y install epel-release
-yum -y install libmcrypt
-yum -y install php-mysql
-yum -y install php-mbstring
-yum -y install php-mcrypt
-yum -y install php-xml
-yum -y install php-intl
 yum -y install graphviz
 yum -y install mod_ssl
-yum -y install firewalld
 
 # change PHP.INI to max memory of 1GB
 sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
 
 # start and setup firewall
 systemctl restart firewalld
-firewall-cmd --zone=public --add-port=ssh/tcp --permanent
 firewall-cmd --zone=public --add-port=http/tcp --permanent
 firewall-cmd --zone=public --add-port=https/tcp --permanent
 systemctl restart firewalld
-
-# set machine info
-hostnamectl set-hostname ${HOSTNAME}
 
 # create ssl certs
 SUBJ="
@@ -127,6 +114,3 @@ SELINUX=disabled
 #     mls - Multi Level Security protection.
 SELINUXTYPE=targeted
 EOL
-
-#reboot
-reboot
