@@ -2,6 +2,9 @@
 
 # show host information
 hostnamectl
+lsb_release -a
+uname -a
+dpkg -l | grep linux-image
 
 #show network information
 ip addr show
