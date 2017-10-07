@@ -1,5 +1,7 @@
 #!/bin/sh
 
+hostname ${HOSTNAME}
+
 # set variables
 CERTC=CA
 CERTST=Manitoba
