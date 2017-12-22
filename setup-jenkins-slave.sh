@@ -37,7 +37,7 @@ systemctl restart firewalld
 pecl install Xdebug
 
 # phpunit
-wget -O phpunit.phar https://phar.phpunit.de/phpunit-4.1.6.phar
+wget -O phpunit.phar https://phar.phpunit.de/phpunit-5.7.26.phar
 chmod +x phpunit.phar
 mv -f phpunit.phar /usr/local/bin/phpunit
 
