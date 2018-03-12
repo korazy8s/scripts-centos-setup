@@ -114,3 +114,5 @@ SELINUX=disabled
 #     mls - Multi Level Security protection.
 SELINUXTYPE=targeted
 EOL
+
+systemctl restart httpd
