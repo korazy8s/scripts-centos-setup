@@ -1,7 +1,5 @@
 #!/bin/sh
 
-hostname ${HOSTNAME}
-
 # set variables
 CERTC=CA
 CERTST=Manitoba
@@ -33,9 +31,6 @@ yum -y update
 yum -y install yum-cron
 systemctl start yum-cron
 sed -ie 's/apply_updates = no/apply_updates = yes/' /etc/yum/yum-cron.conf
-
-# set machine info
-hostnamectl set-hostname ${HOSTNAME}
 
 # install dependencies
 yum -y install wget
