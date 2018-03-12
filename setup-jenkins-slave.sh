@@ -1,5 +1,4 @@
 #!/bin/sh
-HOSTNAME=id-jenkins-sl1
 
 # updates
 yum -y update
@@ -86,9 +85,6 @@ sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
 # zend_extension="/usr/lib64/php/modules/xdebug.so"
 # xdebug.remote_enable = 1 
 
-# set host info
-hostnamectl set-hostname ${HOSTNAME}
-
 # yui compressor
 wget -O /var/tmp/yuicompressor-2.4.7.zip https://github.com/downloads/yui/yuicompressor/yuicompressor-2.4.7.zip
 unzip /var/tmp/yuicompressor-2.4.7.zip -d /var/tmp
@@ -107,6 +103,3 @@ firewall-cmd --list-all
 ip addr
 php --version
 phpunit --version
-
-# restart to be sure
-reboot
