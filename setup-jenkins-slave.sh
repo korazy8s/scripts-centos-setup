@@ -9,6 +9,10 @@ sed -ie 's/apply_updates = no/apply_updates = yes/' /etc/yum/yum-cron.conf
 # install vmware tools
 yum -y install open-vm-tools
 
+# install remi repo
+wget http://rpms.famillecollet.com/enterprise/7/remi/x86_64/remi-release-7.4-1.el7.remi.noarch.rpm
+rpm -Uvh remi-release*rpm
+
 # dependencies
 yum -y group install "Development Tools"
 yum -y install php-devel
@@ -33,7 +37,8 @@ firewall-cmd --zone=public --add-port=ssh/tcp --permanent
 systemctl restart firewalld
 
 # xdebug
-pecl install Xdebug
+# pecl install Xdebug
+yum --enablerepo=remi install php-pecl-xdebug
 
 # phpunit
 wget -O phpunit.phar https://phar.phpunit.de/phpunit-4.8.9.phar
