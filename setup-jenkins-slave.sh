@@ -38,7 +38,7 @@ systemctl restart firewalld
 
 # xdebug
 # pecl install Xdebug
-yum --enablerepo=remi install php-pecl-xdebug
+yum --enablerepo=remi -y install php-pecl-xdebug
 
 # phpunit
 wget -O phpunit.phar https://phar.phpunit.de/phpunit-4.8.9.phar
