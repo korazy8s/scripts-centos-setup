@@ -23,6 +23,7 @@ yum-config-manager --enable remi-php72
 
 # install apache
 yum -y install httpd
+yum -y install mod_ssl openssl
 
 # install dependencies
 yum -y install php php-mcrypt php-cli php-gd php-curl php-mysql php-ldap php-zip php-fileinfo
