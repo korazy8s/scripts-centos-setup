@@ -13,25 +13,19 @@ CERTEMAIL=root@localhost
 yum -y update
 yum -y install centos-release-scl
 
+yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum -y install yum-utils
+
+# yum-config-manager --enable remi-php70
+# yum-config-manager --enable remi-php71
+yum-config-manager --enable remi-php72
+
 # install apache
 yum -y install httpd
 
-# add repos
-$ wget -q http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-$ wget -q https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-
-rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm
-yum-config-manager --enable remi-php71
-
 # install dependencies
-# yum -y group install "Development Tools"
-# yum -y install openssl
-# yum -y install libmcrypt
-# yum -y install wget
-# yum -y install epel-release
-# yum -y install graphviz
-# yum -y install mod_ssl
-yum -y install rh-php71 rh-php71-php-xml rh-php71-php-mbstring rh-php71-php-gd rh-php71-php-soap rh-php71-php-mysqlnd rh-php71-php-fpm
+yum -y install php php-mcrypt php-cli php-gd php-curl php-mysql php-ldap php-zip php-fileinfo
 
 # change PHP.INI to max memory of 1GB
 # sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
