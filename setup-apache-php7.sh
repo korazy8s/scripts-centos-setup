@@ -29,7 +29,7 @@ yum -y install mod_ssl openssl
 yum -y install php php-mcrypt php-cli php-gd php-curl php-mysql php-ldap php-zip php-fileinfo
 
 # change PHP.INI to max memory of 1GB
-# sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
+sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
 
 # start and setup firewall
 systemctl restart firewalld
