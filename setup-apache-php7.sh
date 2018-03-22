@@ -11,32 +11,30 @@ CERTEMAIL=root@localhost
 
 # install latest updates
 yum -y update
-
-# setup automatic updates manager
-yum -y install yum-cron
-systemctl start yum-cron
-sed -ie 's/apply_updates = no/apply_updates = yes/' /etc/yum/yum-cron.conf
-
-# install vmware tools
-yum -y install open-vm-tools
-
 yum -y install centos-release-scl
 
 # install apache
 yum -y install httpd
 
+# add repos
+$ wget -q http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+$ wget -q https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm
+yum-config-manager --enable remi-php71
+
 # install dependencies
-yum -y group install "Development Tools"
-yum -y install openssl
-yum -y install libmcrypt
-yum -y install wget
-yum -y install epel-release
-yum -y install graphviz
-yum -y install mod_ssl
+# yum -y group install "Development Tools"
+# yum -y install openssl
+# yum -y install libmcrypt
+# yum -y install wget
+# yum -y install epel-release
+# yum -y install graphviz
+# yum -y install mod_ssl
 yum -y install rh-php71 rh-php71-php-xml rh-php71-php-mbstring rh-php71-php-gd rh-php71-php-soap rh-php71-php-mysqlnd rh-php71-php-fpm
 
 # change PHP.INI to max memory of 1GB
-sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
+# sed -ri 's/^(memory_limit = )[0-9]+(M.*)$/\1'1024'\2/' /etc/php.ini
 
 # start and setup firewall
 systemctl restart firewalld
