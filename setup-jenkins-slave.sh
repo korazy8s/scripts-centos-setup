@@ -46,7 +46,7 @@ chmod +x phpunit.phar
 mv -f phpunit.phar /usr/local/bin/phpunit
 
 # phploc
-wget -O phploc.phar https://phar.phpunit.de/phploc.phar
+wget -O phploc.phar https://phar.phpunit.de/phploc-2.1.5.phar
 chmod +x phploc.phar
 mv -f phploc.phar /usr/local/bin/phploc
 
