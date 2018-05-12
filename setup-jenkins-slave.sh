@@ -66,7 +66,7 @@ chmod +x phpmd.phar
 mv -f phpmd.phar /usr/local/bin/phpmd
 
 # pdepend
-wget -O pdepend.phar http://static.pdepend.org/php/latest/pdepend.phar
+wget -O pdepend.phar http://static.pdepend.org/php/2.1.0/pdepend.phar
 chmod +x pdepend.phar
 mv -f pdepend.phar /usr/local/bin/pdepend
 
