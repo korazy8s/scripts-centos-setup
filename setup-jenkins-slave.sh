@@ -56,7 +56,7 @@ chmod +x phpDocumentor.phar
 mv -f phpDocumentor.phar /usr/local/bin/phpdox
 
 # phpcpd
-wget -O phpcpd.phar https://phar.phpunit.de/phpcpd.phar
+wget -O phpcpd.phar https://phar.phpunit.de/phpcpd-2.0.4.phar
 chmod +x phpcpd.phar
 mv -f phpcpd.phar /usr/local/bin/phpcpd
 
