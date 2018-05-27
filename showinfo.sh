@@ -3,6 +3,8 @@
 # show host information
 hostnamectl
 lsb_release -a
+cat /etc/redhat-release
+cat /etc/os-release
 uname -a
 dpkg -l | grep linux-image
 echo
@@ -26,7 +28,6 @@ echo
 
 # show php information
 php --version
-phpunit --version
 echo
 
 # show selinux status
