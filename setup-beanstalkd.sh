@@ -1,6 +1,5 @@
 
 #!/bin/sh
-HOSTNAME=id-sqs1
 
 # install latest updates
 yum -y update
@@ -38,12 +37,8 @@ ExecStart=/usr/bin/beanstalkd -b /var/lib/beanstalkd
 WantedBy=multi-user.target
 EOL
 
-# set machine info
-hostnamectl set-hostname ${HOSTNAME}
-
 # enable firewall rules
 systemctl restart firewalld
-firewall-cmd --zone=public --add-port=ssh/tcp --permanent
 firewall-cmd --zone=public --add-port=11300/tcp --permanent
 systemctl restart firewalld
 
@@ -56,6 +51,3 @@ ps ax | grep beanstalkd
 
 # show ports
 netstat -tulpn
-
-# reboot to be sure
-reboot
