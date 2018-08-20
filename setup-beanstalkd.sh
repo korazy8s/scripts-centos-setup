@@ -13,7 +13,7 @@ sed -ie 's/apply_updates = no/apply_updates = yes/' /etc/yum/yum-cron.conf
 yum -y install open-vm-tools
 
 # install dependencies
-yum -y install group "Development Tools"
+yum -y group install "Development Tools"
 yum -y install git
 yum -y install firewalld
 
